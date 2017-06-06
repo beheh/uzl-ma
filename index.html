@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Verteidigung MA</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/night.css">
@@ -22,21 +22,24 @@
 		</script>
 
 		<style type="text/css">
-			.reveal h1 {
-				font-size: 1.3em;
-			}
-
-			.reveal h2 {
-				font-size: 1.3em;
-			}
-
 			.reveal ul {
 				list-style-type: square;
 			}
 
-			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
-				font-family: sans-serif;
-				font-weight: bold;
+			.reveal h2 {
+				font-size: 1.5em;
+			}
+
+			.reveal p {
+				text-align: left;
+			}
+
+			.reveal ul, .reveal ol {
+				width: 100%;
+			}
+
+			.reveal li {
+				margin: 15px 0px;
 			}
 
 		</style>
@@ -45,56 +48,111 @@
 		<div class="reveal">
 			<div class="slides">
 				<section style="text-align: left">
-					<h1>Verteilung, Ausführung und Überwachung von Arbeitspaketen in einem Peer-to-Peer-Netzwerk</h1>
-					<p>Masterarbeit von Benedict Etzel</p>
+					<h1 style="font-size: 1em;">
+						<small>Kolloquium</small><br />
+						Verteilung, Ausführung und Überwachung von Arbeitspaketen in einem Peer-to-Peer-Netzwerk
+					</h1>
+					<address>
+						<small>
+							Benedict Etzel<br />
+							Universität zu Lübeck
+						</small>
+					</address>
 				</section>
 
+				<!--
 				<section>
 					<blockquote>
 						<p>„Invention, it must be humbly admitted, does not consist in creating out of void but out of chaos.“</p>
 						<footer>&mdash; Mary Wollstonecraft Shelley</footer>
 					</blockquote>
 				</section>
-
+				-->
 
 				<section>
-					<h2>Inhalt</h2>
+					<h2>Wieso?</h2>
 					<ul>
-						<li>Einführung</li>
-						<li>Verteilung</li>
-						<li>Ausführung</li>
-						<li>Überwachung</li>
-						<li>Ausblick</li>
+						<li class="fragment"><em>Internet of Things</em></li>
+						<li class="fragment">Überschüssige Rechenleistung</li>
+						<li class="fragment">Mächtige, plattformunabhänige Sprachen</li>
 					</ul>
 				</section>
 
 				<section>
+					<h2>Inhalt</h2>
+					<ol>
+						<li>Grundlagen</li>
+						<li>Verteilung</li>
+						<li>Ausführung</li>
+						<li>Überwachung</li>
+						<li>Ausblick</li>
+					</ol>
+				</section>
+
+				<section>
 					<section>
-						<h2>ChordRTC <small>(Boldt/ITM)</small></h2>
-						<ul>
-							<li>P2P</li>
-							<li>WebRTC</li>
-							<li>JavaScript</li>
-						</ul>
+						<h2>Grundlagen</h2>
 					</section>
 
 					<section>
-						<h2>Peer-to-Peer</h2>
+						<h2>ChordRTC</h2>
 						<ul>
-							<li>Teilnehmer zu Teilnehmer</li>
+							<li class="fragment">JavaScript-Anwendung</li>
+							<li class="fragment">Peer-to-Peer</li>
+							<li class="fragment">Chord-Protokoll</li>
+							<li class="fragment">WebRTC zur Kommunikation</li>
 						</ul>
+						<aside class="notes">
+							<strong>ChordRTC</strong>, Anwendung von Dennis
+							<ul>
+								<li>JS (Browser/Electron/Node)</li>
+								<li>P2P</li>
+								<li>Chord: gleich mehr</li>
+								<li>WebRTC: seit Arbeit Kaminski, auch gleich</li>
+							</ul>
+							<p> => Plattform für Erprobung</p>
+						</aside>
+					</section>
+
+					<section>
+						<div style="display: flex; flex-direction: row">
+							<img src="img/chordrtc1.png" style="margin-right: 10px; border: 0;">
+							<img src="img/chordrtc2.png" style="border: 0;">
+						</div>
 					</section>
 
 					<section>
 						<h2>Chord</h2>
 						<ul>
-							<li>Verteilte Hashtabelle</li>
-							<li>Ringstruktur</li>
+							<li class="fragment">Verteilte Hashtabelle</li>
+							<li class="fragment">Lookup: Schlüssel &rightarrow; Teilnehmer</li>
+							<li class="fragment">Ringstruktur</li>
+							<li class="fragment"><em>O(N)</em> &le; Suchkomplexität &le; <em>O(log<small style="vertical-align: text-bottom">2</small>N)</em></li>
 						</ul>
 					</section>
 
 					<section>
+						<img src="img/chord.png">
+					</section>
+
+					<section>
 						<h2>WebRTC</h2>
+						<ul>
+							<li class="fragment">P2P-Kommunikation im Browser</li>
+							<li class="fragment"><em>Interactive Connectivity Establishment</em> (<abbr>ICE</abbr>)</li>
+							<li class="fragment">Signaling</li>
+							<li class="fragment">JavaScript-API</li>
+						</ul>
+						<aside class="notes">
+							<ul>
+								<li>
+									ICE
+									<ul>
+										<li>STUN/TURN</li>
+									</ul>
+								</li>
+							</ul>
+						</aside>
 					</section>
 				</section>
 
@@ -102,11 +160,159 @@
 					<section>
 						<h2>Verteilung</h2>
 					</section>
+
+					<section>
+						<h2>Teilnehmer</h2>
+						<ul>
+							<li class="fragment">Treten als Auftragnehmer und/oder -geber auf</li>
+							<li class="fragment">
+								Verfügen über lokale Attribute
+								<ul>
+									<li><code>type:fridge</code></li>
+									<li><code>location:germany</code></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Aufträge</h2>
+						<img src="img/lifecycle.png" />
+					</section>
+
+					<section>
+						<h2>Arbeitspakete</h2>
+						<ul>
+							<li class="fragment">Ziel: Beschreibung eines (isolierten) Auftrags</li>
+							<li class="fragment">Serialisierbar</li>
+							<li class="fragment">Spezifikation
+								<ul>
+									<li>Schlüssel</li>
+									<li>Version</li>
+									<li>Quelle</li>
+									<li>Vorbedingungen</li>
+									<li>Anweisungen</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Serialisiertes Arbeitspaket</h2>
+						<pre>
+							<code data-trim>
+							{
+								"uuid": "db17ade0-f708-11e6-8f6b-05c991919f37",
+								"version": "1.0",
+								"source": "f444fe3fe2395fb6eef732611d37cd602320b8e5",
+								"preconditions": {
+									"environment": "browser",
+								},
+								"module": "module.exports={execute()=>console.log('1')}",
+							}
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h2>Statuspakete</h2>
+						<ul>
+							<li class="fragment">Optional</li>
+							<li class="fragment">Zustandsveränderungen</li>
+							<li class="fragment">Ergebnisse (falls vorhanden)</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Serialisiertes Statuspaket</h2>
+						<pre>
+							<code data-trim>
+							{
+								"uuid": "d8a21a00-f708-11e6-9994-37727b24817d",
+								"version": "1.0",
+								"source": "87f6df4b9ad1cf83bec71b3d8a9f34c2c298ec50",
+								"state": "complete",
+								"payload": {
+									"sum": 5,
+									"sub": 1
+								}
+							}
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h2>Transfer</h2>
+						<ul>
+							<li class="fragment">Direkte Verbindung</li>
+							<li class="fragment">Teilnehmer-/Auftragslisten</li>
+							<li class="fragment">Bekannte Schlüssel</li>
+							<li class="fragment">
+								Nach Attributen
+							</li>
+						</ul>
+						<aside class="notes">
+							<p>Fast schon wieder ein zentralisiertes System</p>
+						</aside>
+					</section>
+
+					<section>
+						<h2>Integrität</h2>
+						<ul>
+							<li class="fragment">DHTs: Teilnehmer haben freien Zugriff
+								<ul>
+									<li class="fragment">Paketverlust</li>
+									<li class="fragment">Paketmanipulation</li>
+									<li class="fragment">Gefälschte Pakete</li>
+								</ul>
+							</li>
+							<li class="fragment">Prüfsumme</li>
+							<li class="fragment">Überprüfung der Identität</li>
+						</ul>
+					</section>
 				</section>
 
 				<section>
 					<section>
 						<h2>Ausführung</h2>
+					</section>
+
+					<section>
+						<h2>JavaScript</h2>
+						<ul>
+							<li class="fragment">ECMAScript</li>
+							<li class="fragment">Asynchronität</li>
+							<li class="fragment">
+								Plattformunabhängig
+								<ul>
+									<li class="fragment">Aber: Laufzeitumgebung &ne; Laufzeitumgebung</li>
+								</ul>
+							</li>
+						</li>
+					</section>
+
+					<section>
+						<h2>Modulsysteme</h2>
+						<ul>
+							<li class="fragment"><em>Separation of Concerns</em></li>
+							<li class="fragment">Konkurrierende Standards
+								<ul>
+									<li class="fragment">CommonJS: <code>require()</code></li>
+									<li class="fragment">AMD: <code>define()</code>/<code>require()</code></li>
+									<li class="fragment">ES6: <code>export</code>/<code>import</code></li>
+								</ul>
+							</li>
+							<li class="fragment">Definition der Schnittstellen</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Rückübertragung</h2>
+						<ul>
+							<li class="fragment">Statuspakete</li>
+							<li class="fragment">Direkte Übertragung</li>
+							<li class="fragment">Fester Empfänger</li>
+						</ul>
 					</section>
 				</section>
 
@@ -115,22 +321,113 @@
 					<section>
 						<h2>Überwachung</h2>
 					</section>
-				</section>
 
-				<section>
-
-				</section>
-
-				<section>
 					<section>
-						<h2>Vielen Dank!</h2>
-					</section>
-					<section>
-						<h2>Quellen</h2>
+						<h2>Konzepte</h2>
 						<ul>
-							<li></li>
+							<li class="fragment">
+								Zustandsüberwachung
+								<ul>
+									<li class="fragment">Regelmäßige Erfassung</li>
+									<li class="fragment">Zeit-Serien-Datenbanken</li>
+								</ul>
+							</li>
+							<li class="fragment">Fehlerüberwachung</li>
 						</ul>
 					</section>
+
+					<section>
+						<h2>Anwendungsfall</h2>
+						<ul>
+							<li class="fragment">Können als Aufträge umgesetzt werden!</li>
+							<li class="fragment">Fehlerüberwachung mittels <code>try...catch</code></li>
+							<li class="fragment">Zustandsüberwachung als regelmäßiger Auftrag</li>
+							<li class="fragment">Protoyp</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>Demo</section>
+
+				<section>
+					<section>
+						<h2>Rückblick</h2>
+					</section>
+
+					<section>
+						<h3>Was hat geklappt?</h3>
+						<ul>
+							<li class="fragment">Methodiken zum Auftragsaustausch</li>
+							<li class="fragment"></li>
+							<li class="fragment">Prototypen</li>
+						</ul>
+						<p class="fragment">&rightarrow; Flexible, verteilte Ausführung</p>
+					</section>
+
+					<section>
+						<h3>Was hat nicht geklappt?</h3>
+						<ul>
+							<li class="fragment">Ausführliche Evaluation</li>
+							<li class="fragment">Monitoring</li>
+							<li class="fragment">Timing&hellip;</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Ausblick</h2>
+						<ul>
+							<li class="fragment">Evaluation in realitätsnaher Umgebung</li>
+							<li class="fragment">Kryptographische Überprüfung</li>
+							<li class="fragment">Ethereum: Smart Contracts</li>
+							<li class="fragment">RDF</li>
+							<li class="fragment">Webpack</li>
+							<li class="fragment">&hellip;</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Referenzen</h2>
+						<ul style="font-size: 0.7em">
+							<li><a href="https://shattered.io/static/shattered.pdf">Stevens, Marc, Bursztein, Elie et al: <em>The first collision for full SHA-1</em></a></li>
+							<li><a href="https://www.ethereum.org/">Dr. Wood, Gavin: <em>Ethereum: A secure decentralised generalised transaction ledger</em></a></li>
+						</ul>
+					</section>
+
+					<section>
+						<p>Danke für Ihre Aufmerksamkeit.</p>
+					</section>
+				</section>
+
+				<!--<section>
+
+					<section></section>
+
+					<section>
+						<img src="img/p2p.png" />
+					</section>
+
+					<section>
+						<img src="img/chord.png" />
+					</section>
+
+					<section>
+						<img src="img/websocket.png" />
+					</section>
+
+					<section>
+						<img src="img/nat.png" />
+					</section>
+
+					<section>
+						<img src="img/nat_firewall.png" />
+					</section>
+
+					<section>
+						<img src="img/lifecycle.png" />
+					</section>
+				</section>-->
 			</div>
 		</div>
 
@@ -147,14 +444,37 @@
 				progress: true,
 				history: true,
 				center: true,
-				transition: 'slide',
+				slideNumber: "c/t",
+				transition: "slide",
 				// deps
 				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
+					{src: 'plugin/markdown/marked.js'},
+					{src: 'plugin/markdown/markdown.js'},
+					{src: 'plugin/notes/notes.js', async: true},
+					{
+						src: 'plugin/highlight/highlight.js',
+						async: true,
+						callback: () => {
+							hljs.initHighlightingOnLoad();
+						},
+					},
+					{src: 'plugin/elapsed-time-bar/elapsed-time-bar.js'},
+				],
+				// plugins
+				allottedTime: 20 * 60 * 1000, // 20 minutes
+				barColor: "#3E6697",
+				pausedBarColor: "rgba(62,102,151,.6)",
+				//
+				keyboard: {
+					// pause/resume time when Enter is pressed
+					13: () => {
+						ElapsedTimeBar.isPaused ? ElapsedTimeBar.resume() : ElapsedTimeBar.pause();
+					},
+					// reset timer when 'r' is pressed
+					82: () => {
+						ElapsedTimeBar.reset();
+					},
+				}
 			});
 		</script>
 	</body>
